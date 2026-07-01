@@ -34,3 +34,34 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Folder Structure:
+metrics-dashboard/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          ← Providers (QueryClientProvider) go here
+│   │   ├── page.tsx            ← Dashboard home
+│   │   └── providers.tsx       ← 'use client' wrapper for React Query
+│   ├── components/
+│   │   ├── ChartWidget/
+│   │   │   ├── ChartWidget.tsx
+│   │   │   ├── ChartWidget.test.tsx   ← RTL tests (US-3 AC)
+│   │   │   ├── LineChart.tsx
+│   │   │   ├── BarChart.tsx
+│   │   │   └── PieChart.tsx
+│   │   └── MetricCard/
+│   │       ├── MetricCard.tsx
+│   │       └── MetricCard.test.tsx
+│   ├── hooks/
+│   │   ├── useMetricsFeed.ts          ← React Query useQuery wrapper
+│   │   └── useMetricsFeed.test.ts     ← hook tests with renderHook
+│   ├── lib/
+│   │   └── mockMetricsFeed.ts
+│   ├── types/
+│   │   └── metrics.ts                 ← US-1 interfaces and types
+├── e2e/
+│   └── dashboard.spec.ts              ← Playwright E2E test
+├── jest.config.ts
+├── jest.setup.ts
+├── playwright.config.ts
+└── package.json
