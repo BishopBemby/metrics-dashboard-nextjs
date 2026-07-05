@@ -1,9 +1,9 @@
-interface DataPoint{
+export interface DataPoint{
     t: number;
     v: number;
 }
 
-interface Metric{
+export interface Metric{
     name: string;
     label: string;
     unit: 'ms' | 'bytes' | 'count' | 'percent';
@@ -70,3 +70,20 @@ const Dogs :Record<DogBreed, DogsInfo> = {
     Bulldog: { age: 5, weight: 50 },
     Collie: { age: 2, weight: 30 }
 }
+
+//discriminated Union
+
+export type ChartConfig =
+| {kind: 'line', smooth: boolean, showDots: boolean}
+| {kind: 'bar', stacked: boolean, barWidth: number}
+| {kind: 'pie', donut: boolean, legendPosition: 'top' | 'bottom' | 'left' | 'right'};
+
+//generics
+export interface ChartWidgetProps<T>{
+    data: T[];
+    chartConfig: ChartConfig;
+    xAccessor: (point: T) => number;
+    yAccessor: (point: T) => number;
+}
+
+export type ChartPreviewProps<T> = Pick<ChartWidgetProps<T>,'data' | 'chartConfig'>
