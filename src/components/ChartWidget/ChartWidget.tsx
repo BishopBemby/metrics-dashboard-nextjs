@@ -1,27 +1,29 @@
-type ChartConfig =
-| {kind: 'line', smooth: boolean, showDots: boolean}
-| {kind: 'bar', stacked: boolean, barWidth: number}
-| {kind: 'pie', donut: boolean, legendPosition: 'top' | 'bottom' | 'left' | 'right'};
+'use client'
 
-function renderShapes(config: ChartConfig) {
-  switch (config.kind) {
-    case 'line':
-        return config.smooth;
-    case 'bar':
-        return config.stacked;
-    case 'pie':
-        return config.donut;
-    default: {
-        const _exhaustiveCheck: never = config;
-        return _exhaustiveCheck;
+import type { ChartWidgetProps, DataPoint} from '@/types/metrics';
+
+import {LineChart} from './LineChart';
+import {BarChart} from './BarChart';
+import {PieChart} from './PieChart';
+
+function assertNever(x: never): never {
+    throw new Error(`Unexpected object: ${x}`);
+}
+
+export function ChartWidget<T extends object>(props: ChartWidgetProps<T>) {
+    const { data, chartConfig } = props;
+    switch (chartConfig.kind) {
+        case 'line':
+            return <LineChart data={data as unknown as DataPoint[]} config={chartConfig} />;
+        case 'bar':
+            return <BarChart data={data as unknown as DataPoint[]} config={chartConfig} />;
+        case 'pie':
+            return <PieChart data={data as unknown as DataPoint[]} config={chartConfig} />;
+        default:
+            return assertNever(chartConfig);
     }
-  }
 }
 
-interface ChatWidgetProps<T>{
-    data: T[];
-    chartConfig: ChartConfig;
-    xAccessor: (point: T) => number;
-    yAccessor: (point: T) => number;
-}
+
+
 

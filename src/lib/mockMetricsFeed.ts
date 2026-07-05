@@ -1,3 +1,5 @@
+import type { DataPoint } from '@/types/metrics';
+
 function generateDataPoint(prev: number): DataPoint {
   const drift = (Math.random() - 0.5) * 10;
   return { t: Date.now(), v: Math.max(0, prev + drift) };
