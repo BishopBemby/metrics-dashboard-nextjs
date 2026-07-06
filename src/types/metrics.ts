@@ -4,7 +4,7 @@ export interface DataPoint{
 }
 
 export interface Metric{
-    name: string;
+    id: string;
     label: string;
     unit: 'ms' | 'bytes' | 'count' | 'percent';
     value: number;
@@ -20,12 +20,12 @@ type ReadonlyMetric<T> = {
     readonly [K in keyof T]: T[K];
 }
 
-type PreviewMetric = Pick<Metric, 'name' | 'label'>;
+type PreviewMetric = Pick<Metric, 'id' | 'label'>;
 type SummaryMetric = Omit<Metric, 'series'>;
 type NewSubMetric = Partial<Metric> 
 
 const metricA: Metric = {
-    name: 'metricA',
+    id: 'metricA',
     label: 'Metric A',
     unit: 'ms',
     value: 100,
@@ -40,7 +40,7 @@ const metricB = updateMetric(metricA, {unit: 'bytes'})
 
 //opposite of Partial
 const metricC: Required<Metric> = {
-    name: 'metricC',
+    id: 'metricC',
     label: 'Metric C',
     unit: 'ms',
     value: 200,
@@ -82,8 +82,9 @@ export type ChartConfig =
 export interface ChartWidgetProps<T>{
     data: T[];
     chartConfig: ChartConfig;
-    xAccessor: (point: T) => number;
-    yAccessor: (point: T) => number;
+    onPointHover?: (point: T) => void;
+    xAccessor?: (point: T) => number;
+    yAccessor?: (point: T) => number;
 }
 
 export type ChartPreviewProps<T> = Pick<ChartWidgetProps<T>,'data' | 'chartConfig'>
