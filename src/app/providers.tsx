@@ -9,7 +9,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     defaultOptions: {
       queries: {
         staleTime: 5000,      // metrics stay fresh 5s
-        refetchInterval: 3000 // auto-refetch every 3s — simulates live feed
+        refetchOnWindowFocus: false,
       }
     }
   }))
